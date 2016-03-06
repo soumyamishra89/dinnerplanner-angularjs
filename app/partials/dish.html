@@ -1,5 +1,16 @@
 <!-- We include the sidebar as it is shared across two screens. -->
 <ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
-
+ {{status}}
+<br>
+<h2>{{Dish.Title}}</h2><br>
+<img ng-src="{{Dish.ImageURL}}" align="middle" style="width:100px;height:100px"/>
+<br>
+<br>
+<h4><u>{{Instructions}}</u></h4><br>
+{{Dish.Instructions}}
+<h3><u>{{Ingredients}}</u></h3><br>
+<li ng-repeat="ing in Dish.Ingredients">
+	{{ing.Name}}  : {{ing.Quantity * noOfGuests}}   {{ing.Unit}}
+</li>
 <!-- TODO in Lab 5: Display the dish information including image, Description, 
 Instructions, Ingredients and total cost. -->
