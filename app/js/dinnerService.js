@@ -32,16 +32,19 @@ dinnerPlannerApp.factory('Dinner',function ($resource, $cookieStore) {
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'66J8l00npnHHZcCNLRhxkfW1OHxbojy4'}); 
 
   var fullMenu =[];
+  
 
   this.addDishToMenu = function(dish) {
     if($cookieStore.get("dishes") !== undefined) {
       fullMenu = $cookieStore.get("dishes");
     }
-    fullMenu.push(dish);
+    if(fullMenu.indexOf(dish.RecipeID) ===-1) {
+      fullMenu.push(dish.RecipeID);
+    }
     $cookieStore.put("dishes", fullMenu);
   }
 
-  this.getAllDishes = function() {
+  this.getAllDishIds = function() {
     if($cookieStore.get("dishes") === undefined) {
       return fullMenu;
     }

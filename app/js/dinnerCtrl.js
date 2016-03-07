@@ -13,9 +13,19 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
   }
 
   $scope.getAllDishes = function() {
-  	return Dinner.getAllDishes();
+  	var dishIds = Dinner.getAllDishIds();
+  	var dishes = [];
+  	for(i = 0; i<dishIds.length; i++) {
+  		Dinner.Dish.get({id:dishIds[i]}, function(data) {
+  		$scope.Dish = data;
+  		$scope.status = "";
+  		$scope.Ingredients="Ingredients";
+  		$scope.Instructions="Instructions";
+   	}, function(data){
+     $scope.status = "There was an error";
+   });  
   }
-  // TODO in Lab 5: Implement the methods to get the dinner menu
-  // add dish to menu and get total menu price
-
+  	return dishes;
+  }
+  
 });
