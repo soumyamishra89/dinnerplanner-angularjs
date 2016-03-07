@@ -3,16 +3,22 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner',function ($resource, $cookieStore) {
   
   var numberOfGuest = 2;
   
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
+    $cookieStore.put("guests", numberOfGuest);
   }
 
   this.getNumberOfGuests = function() {
-    return numberOfGuest;
+    if($cookieStore.get("guests") === undefined) {
+      return numberOfGuest;
+    }
+    else {
+      return $cookieStore.get("guests");
+    }
   }
 
   
@@ -24,6 +30,25 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
 
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:25,api_key:'66J8l00npnHHZcCNLRhxkfW1OHxbojy4'});
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'66J8l00npnHHZcCNLRhxkfW1OHxbojy4'}); 
+
+  var fullMenu =[];
+
+  this.addDishToMenu = function(dish) {
+    if($cookieStore.get("dishes") !== undefined) {
+      fullMenu = $cookieStore.get("dishes");
+    }
+    fullMenu.push(dish);
+    $cookieStore.put("dishes", fullMenu);
+  }
+
+  this.getAllDishes = function() {
+    if($cookieStore.get("dishes") === undefined) {
+      return fullMenu;
+    }
+    else {
+     return $cookieStore.get("dishes");
+    }
+  }
 
 
 

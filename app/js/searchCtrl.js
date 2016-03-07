@@ -2,18 +2,23 @@
 // and search results
 dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
 
-  // TODO in Lab 5: you will need to implement a method that searchers for dishes
-  // including the case while the search is still running.
-  
   $scope.search = function(query) {
    $scope.status = "Searching...";
    Dinner.DishSearch.get({title_kw:query},function(data){
      $scope.dishes=data.Results;
-     console.log(data.Results);
+    
      $scope.status = "Showing " + data.Results.length + " results";
    },function(data){
      $scope.status = "There was an error";
    });
+ }
+
+ $scope.addDishToMenu = function(dish) {
+  Dinner.addDishToMenu(dish);
+ }
+ $scope.isDishAdded = function(dish) {
+  console.log(Dinner.getAllDishes());
+  return Dinner.getAllDishes().indexOf(dish)===-1 ? false : true;
  }
 
 });
