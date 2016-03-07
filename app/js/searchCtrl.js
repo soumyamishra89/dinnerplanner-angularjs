@@ -17,7 +17,6 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
   Dinner.addDishToMenu(dish);
  }
  $scope.isDishAdded = function(dishId) {
-  console.log(Dinner.getAllDishes());
   return Dinner.getAllDishIds().indexOf(dishId)===-1 ? false : true;
  }
 
