@@ -14,7 +14,13 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
  }
 
  $scope.addDishToMenu = function(dish) {
-  Dinner.addDishToMenu(dish);
+  Dinner.Dish.get({id:dish.RecipeID}, function(data) {
+
+      Dinner.addDishToMenu(data);
+    }, function(data){
+     $scope.status = "There was an error";
+   });
+  
  }
  $scope.isDishAdded = function(dishId) {
   return Dinner.getAllDishIds().indexOf(dishId)===-1 ? false : true;

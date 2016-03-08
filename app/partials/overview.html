@@ -1,9 +1,38 @@
 <h2>Dish Overview</h2><br><br>
-<ul>
- <li ng-repeat="dish in getAllDishes()">
- <img ng-src="{{dish.ImageURL120}}"/>
- {{dish.Title}}
- <a ng-href="#/dish/{{dish.RecipeID}}">View more</a>
- {{dish.Category}} {{dish.Subcategory}}
- </li>
-</ul>
+
+<div class="row">
+	<div class="col-sm-6">
+		Total price: {{totalCost}}
+ 		<ul>
+ 			<li ng-repeat="dish in selectedDishes">
+ 				<div >
+ 					<img ng-src="{{dish.ImageURL}}" height="50" width="50"/>
+ 					<a ng-click="showDetailsinSamePage(dish)">
+ 						{{dish.Title}}
+
+ 						{{dish.Category}} {{dish.Subcategory}}
+ 					</a>
+ 					<button ng-click="removeDish(dish)">remove X</button>
+ 				</div>
+ 
+ 			</li>
+		</ul>
+	</div>
+
+	<div class="col-sm-6" ng-show="showDetails"> 
+		<h2>{{Dish.Title}}</h2><br>
+			<img ng-src="{{Dish.ImageURL}}" align="middle" style="width:100px;height:100px"/>
+		<br>
+		<br>
+		<h4><u>{{Instructions}}</u></h4><br>
+			{{Dish.Instructions}}
+		<h3><u>{{Ingredients}}</u></h3><br>
+		<li ng-repeat="ing in Dish.Ingredients">
+		{{ing.Name}}  : {{ing.Quantity * noOfGuests}}   {{ing.Unit}}
+		</li>
+	</div>
+
+</div>
+
+
+  

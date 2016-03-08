@@ -12,7 +12,15 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
     return Dinner.getNumberOfGuests();
   }
 
-  $scope.getAllDishes = function() {
+  $scope.selectedDishes = Dinner.getSelectedDishes();
+  $scope.totalCost = Dinner.getTotalCostofSelectedDishes();
+  $scope.showDetails = false;
+  $scope.showDetailsinSamePage = function(dish){
+    $scope.showDetails = true;
+    $scope.Dish = dish;
+  }
+
+  /*$scope.getAllDishes = function() {
   	var dishIds = Dinner.getAllDishIds();
   	var dishes = [];
   	for(i = 0; i<dishIds.length; i++) {
@@ -26,6 +34,6 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
    });  
   }
   	return dishes;
-  }
+  }*/
   
 });

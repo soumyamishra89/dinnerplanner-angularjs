@@ -21,6 +21,34 @@ dinnerPlannerApp.factory('Dinner',function ($resource, $cookieStore) {
     }
   }
 
+  var allSelectdDishes =[];
+
+  this.addtoSelectedDish = function(dish){
+    allSelectdDishes.push(dish);
+  }
+
+  this.getSelectedDishes = function(){
+    return allSelectdDishes;
+  }
+
+  this.getTotalCostofSelectedDishes = function(){
+    //console.log(allSelectdDishes);
+    var totalCost = 0;
+    for(i = 0; i < allSelectdDishes.length; i++){
+      var ingredients = allSelectdDishes[i].Ingredients;
+      //console.log("ingredients");
+      //console.log(ingredients);
+      for(j = 0; j < ingredients.length; j++){
+            totalCost += parseInt(ingredients[j].Quantity)*numberOfGuest;
+            //console.log("ing name:");
+            //console.log(ingredients.Name);
+            //console.log("ing Quantity:");
+            //console.log(ingredients.Quantity);
+      }
+    }
+    console.log("totalCost: " + totalCost);
+    return totalCost;
+  }
   
   // TODO in Lab 5: Add your model code from previous labs
   // feel free to remove above example code
@@ -28,8 +56,8 @@ dinnerPlannerApp.factory('Dinner',function ($resource, $cookieStore) {
   // a bit to take the advantage of Angular resource service
   // check lab 5 instructions for details
 
-  this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:25,api_key:'66J8l00npnHHZcCNLRhxkfW1OHxbojy4'});
-  this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'66J8l00npnHHZcCNLRhxkfW1OHxbojy4'}); 
+  this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:25,api_key:'0OV23011kU7B3VVVgxTTTIfdNXeTI3us'});
+  this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'0OV23011kU7B3VVVgxTTTIfdNXeTI3us'}); 
 
   var fullMenu =[];
   
@@ -40,7 +68,27 @@ dinnerPlannerApp.factory('Dinner',function ($resource, $cookieStore) {
     }
     if(fullMenu.indexOf(dish.RecipeID) ===-1) {
       fullMenu.push(dish.RecipeID);
+      allSelectdDishes.push(dish);
+      console.log(dish);
     }
+    $cookieStore.put("dishes", fullMenu);
+  }
+
+  this.removeDish = function(dish){
+    for(i = 0; i < fullMenu.length;i++){
+      if(fullMenu[i] == dish.RecipeID){
+        fullMenu.splice(i,1);
+      }
+    }
+    console.log(allSelectdDishes.length);
+    for(i = 0; i < fullMenu.length;i++){
+      if(allSelectdDishes[i].RecipeID == dish.RecipeID){
+        allSelectdDishes.splice(i,1);
+      }
+    }
+    
+    
+    console.log(allSelectdDishes.length);
     $cookieStore.put("dishes", fullMenu);
   }
 
